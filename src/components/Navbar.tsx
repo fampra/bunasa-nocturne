@@ -25,9 +25,10 @@ const Navbar = () => {
             <div className="ml-10 flex items-center space-x-4">
               <a href="#features" className="nav-link">Features</a>
               <a href="#pricing" className="nav-link">Pricing</a>
-              <a href="#about" className="nav-link">About</a>
-              <a href="#contact" className="nav-link">Contact</a>
+              {/* <a href="#contact" className="nav-link">Contact</a> */}
+              <a href="mailto:contact@bunasa.com">
               <button className="primary-button ml-4">Get Started</button>
+            </a>
             </div>
           </div>
 
