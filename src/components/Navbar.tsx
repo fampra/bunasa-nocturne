@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,14 +11,6 @@ const Navbar = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user || null);
-    });
-
-    return () => subscription.unsubscribe();
   }, []);
 
   return (
@@ -39,21 +27,7 @@ const Navbar = () => {
               <a href="#pricing" className="nav-link">Pricing</a>
               <a href="#about" className="nav-link">About</a>
               <a href="#contact" className="nav-link">Contact</a>
-              {user ? (
-                <button 
-                  className="primary-button ml-4"
-                  onClick={() => navigate('/dashboard')}
-                >
-                  Dashboard
-                </button>
-              ) : (
-                <button 
-                  className="primary-button ml-4"
-                  onClick={() => navigate('/auth')}
-                >
-                  Get Started
-                </button>
-              )}
+              <button className="primary-button ml-4">Get Started</button>
             </div>
           </div>
 
@@ -68,6 +42,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-secondary/95 backdrop-blur-lg">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -75,21 +50,7 @@ const Navbar = () => {
             <a href="#pricing" className="nav-link block">Pricing</a>
             <a href="#about" className="nav-link block">About</a>
             <a href="#contact" className="nav-link block">Contact</a>
-            {user ? (
-              <button 
-                className="primary-button w-full mt-4"
-                onClick={() => navigate('/dashboard')}
-              >
-                Dashboard
-              </button>
-            ) : (
-              <button 
-                className="primary-button w-full mt-4"
-                onClick={() => navigate('/auth')}
-              >
-                Get Started
-              </button>
-            )}
+            <button className="primary-button w-full mt-4">Get Started</button>
           </div>
         </div>
       )}
