@@ -13,16 +13,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 type TicketStatus = "open" | "in_progress" | "resolved" | "closed";
+type TicketPriority = "low" | "medium" | "high" | "urgent";
 
 interface Ticket {
   id: string;
   title: string;
   status: TicketStatus;
-  priority: string;
+  priority: TicketPriority;
   created_at: string;
-  user_profiles?: {
+  user_profiles: {
     full_name: string | null;
-  };
+  }[];
 }
 
 const AdminTicketList = () => {
@@ -104,7 +105,7 @@ const AdminTicketList = () => {
         <TableBody>
           {tickets.map((ticket) => (
             <TableRow key={ticket.id}>
-              <TableCell>{ticket.user_profiles?.full_name || "Unknown"}</TableCell>
+              <TableCell>{ticket.user_profiles[0]?.full_name || "Unknown"}</TableCell>
               <TableCell>{ticket.title}</TableCell>
               <TableCell>
                 <Badge variant="outline">{ticket.status}</Badge>
