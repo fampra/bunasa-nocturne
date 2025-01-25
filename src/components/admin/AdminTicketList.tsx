@@ -12,8 +12,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+type TicketStatus = "open" | "in_progress" | "resolved" | "closed";
+
+interface Ticket {
+  id: string;
+  title: string;
+  status: TicketStatus;
+  priority: string;
+  created_at: string;
+  user_profiles?: {
+    full_name: string | null;
+  };
+}
+
 const AdminTicketList = () => {
-  const [tickets, setTickets] = useState<any[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -46,7 +59,7 @@ const AdminTicketList = () => {
     fetchTickets();
   }, [toast]);
 
-  const updateTicketStatus = async (ticketId: string, status: string) => {
+  const updateTicketStatus = async (ticketId: string, status: TicketStatus) => {
     try {
       const { error } = await supabase
         .from("tickets")
