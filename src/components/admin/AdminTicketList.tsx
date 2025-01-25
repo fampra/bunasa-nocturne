@@ -31,34 +31,54 @@ const AdminTicketList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
+  const fetchTickets = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("tickets")
+        .select(`
+          *,
+          user_profiles (
+            full_name
+          )
+        `)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setTickets(data || []);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("tickets")
-          .select(`
-            *,
-            user_profiles (
-              full_name
-            )
-          `)
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-        setTickets(data || []);
-      } catch (error: any) {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchTickets();
-  }, [toast]);
+
+    // Subscribe to real-time changes
+    const channel = supabase
+      .channel('public:tickets')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tickets'
+        },
+        () => {
+          fetchTickets();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   const updateTicketStatus = async (ticketId: string, status: TicketStatus) => {
     try {
