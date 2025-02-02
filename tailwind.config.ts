@@ -25,45 +25,36 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#4ECCA3",
-          hover: "#45B793",
+          DEFAULT: "#9b87f5",
+          hover: "#7E69AB",
         },
         secondary: {
-          DEFAULT: "#232931",
-          hover: "#2D3440",
+          DEFAULT: "#1A1F2C",
+          hover: "#232931",
         },
         accent: {
           DEFAULT: "#D6BCFA",
           hover: "#C4A3F8",
         },
         card: {
-          DEFAULT: "rgba(35, 41, 49, 0.8)",
-          hover: "rgba(35, 41, 49, 0.9)",
+          DEFAULT: "rgba(26, 31, 44, 0.8)",
+          hover: "rgba(26, 31, 44, 0.9)",
         },
       },
       keyframes: {
-        "fade-up": {
+        "cursor-animate": {
           "0%": {
-            opacity: "0",
-            transform: "translateY(20px)",
+            transform: "scale(1)",
+            opacity: "0.5",
           },
           "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
-        },
-        "fade-in": {
-          "0%": {
+            transform: "scale(0)",
             opacity: "0",
-          },
-          "100%": {
-            opacity: "1",
           },
         },
       },
       animation: {
-        "fade-up": "fade-up 0.5s ease-out",
-        "fade-in": "fade-in 0.3s ease-out",
+        "cursor-animate": "cursor-animate 0.5s ease-out forwards",
       },
     },
   },
