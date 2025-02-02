@@ -2,12 +2,16 @@ import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8">
-      <div className="text-center max-w-4xl animate-fade-up">
-        <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
+    <div className="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background gradient circles */}
+      <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/20 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-accent/20 rounded-full filter blur-3xl"></div>
+      
+      <div className="text-center max-w-4xl relative z-10">
+        <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary mb-4 backdrop-blur-sm border border-primary/20">
           Welcome to Bunasa
         </span>
-        <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight">
+        <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
           Development & Hosting
           <span className="text-primary"> Made Simple</span>
         </h1>
